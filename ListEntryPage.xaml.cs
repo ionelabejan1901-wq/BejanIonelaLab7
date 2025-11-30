@@ -1,33 +1,35 @@
-namespace BejanIonelaLab7;
 using BejanIonelaLab7.Models;
 
-public partial class ListEntryPage : ContentPage
+namespace BejanIonelaLab7
 {
-	public ListEntryPage()
-	{
-		InitializeComponent();
-	}
-    protected override async void OnAppearing()
+    public partial class ListEntryPage : ContentPage
     {
-        base.OnAppearing();
-        listView.ItemsSource = await App.Database.GetShopListsAsync();
-    }
-    async void OnShopListAddedClicked(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new ListPage
+        public ListEntryPage()
         {
-            BindingContext = new ShopList()
-        });
-    }
-    async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        if (e.SelectedItem != null)
+            InitializeComponent();
+        }
+
+        protected override async void OnAppearing()
         {
-            await Navigation.PushAsync(new ListPage
+            base.OnAppearing();
+            listsView.ItemsSource = await App.Database.GetShopListsAsync();
+        }
+
+        async void OnShopListAddedClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new ListPage(new ShopList
             {
-                BindingContext = e.SelectedItem as ShopList
-            });
+                Description = string.Empty
+            }));
+        }
+
+        async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem is ShopList selected)
+            {
+                await Navigation.PushAsync(new ListPage(selected));
+                ((ListView)sender).SelectedItem = null;
+            }
         }
     }
-
 }

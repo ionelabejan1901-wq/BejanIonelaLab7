@@ -2,19 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BejanIonelaLab7.ListEntryPage"
-             Title="ListEntryPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add Shopping List"
-                     Clicked="OnShopListAddedClicked" />
-    </ContentPage.ToolbarItems>
-    <ListView x:Name="listView"
-              Margin="20"
-              ItemSelected="OnListViewItemSelected">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell Text="{Binding Description}"
-                          Detail="{Binding Date}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+             Title="All shopping lists">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Button Text="Add new list" Clicked="OnShopListAddedClicked" />
+            <ListView x:Name="listsView"
+                ItemSelected="OnListViewItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Description}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>
